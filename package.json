@@ -1,0 +1,35 @@
+{
+  "name": "sms-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "appClient": "cd client && npm start",
+    "backend": "node server.js",
+    "dev": "concurrently \"nodemon server.js\" \"npm run appClient\"",
+    "start": "concurrently \"node server.js\" \"npm run appClient\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "concurrently": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.2",
+    "multer": "^1.4.2",
+    "react-helmet": "^6.1.0",
+    "react-redux": "^7.2.3",
+    "react-toastify": "^7.0.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.16"
+  }
+}
