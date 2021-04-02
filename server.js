@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const cors = require('cors')
 const path = require('path');
 const env = require('dotenv');
-const adminRouter = require('./Routes/admin/auth.route');
-const usersRouter = require('./Routes/user.route');
+const authRouter = require('./routes/auth');
+const companyRouter = require('./routes/company');
+const clientRouter = require('./routes/client');
+const messageRouter = require('./routes/message');
 
 const app = express();
-const multipartyMiddleware = multiparty({uploadDir:'./images'});
 
 
 env.config();
@@ -18,7 +19,7 @@ const option = {
     useCreateIndex: true, useFindAndModify: false
 };
 
-mongoose.connect(process.env.PRODUCTION_DATABASE_URL, option)
+mongoose.connect(process.env.DEV_URL, option)
     .then(() => {
         console.log('Db connection successfull');
     })
@@ -37,8 +38,10 @@ app.use('/public', express.static(path.join(__dirname, 'uploads/pages')));
 app.use(cors());
 app.use(express.json());
 
-app.use('/api', adminRouter);
-app.use('/api', usersRouter);
+app.use('/api', authRouter);
+app.use('/api', companyRouter);
+app.use('/api', clientRouter);
+app.use('/api', messageRouter);
 
 
 app.listen(process.env.PORT, () => {
