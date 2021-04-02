@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
     from: {
-        type: String,
-        required: true,
-        trim: true,
-        min: 3,
-        max: 50
+        type: mongoose.Schema.Types.ObjectId, ref: "Company", required: true
     },
     clients: {
         type: String,
@@ -18,7 +14,7 @@ const messageSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId, ref: "User", required: true
-    },
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Message', messageSchema);

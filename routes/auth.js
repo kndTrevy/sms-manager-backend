@@ -1,7 +1,7 @@
 const express = require('express');
 const { signupValidator, signInValidator, updateUserValidator, updatePasswordValidator } = require('../validators/validatorsSchema')
 const { requireSignin, customerMiddleware, adminMiddleware } = require('../common-middleware');
-const { signUp, signIn, signOut, updateProfile, getUsers, getOneUser } = require('../controllers/auth');
+const { signUp, signIn, signOut, updateProfile, getAllUsers, getOneUser } = require('../controllers/auth');
 const multer = require('multer');
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.post('/user/signin', signIn);
 router.post('/user/updateProfile', requireSignin, upload.single('profilePicture'),updateProfile);
 router.post('/user/signout', requireSignin, signOut);
 
-router.get('/get/users', requireSignin, getUsers);
+router.get('/get/users', requireSignin, getAllUsers);
 router.get('/get/user/:_id', requireSignin, getOneUser);
 
 module.exports = router;

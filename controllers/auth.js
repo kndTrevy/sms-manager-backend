@@ -148,6 +148,15 @@ exports.getUsers = (req,res) =>{
 	})
 }
 
+exports.getAllUsers = (req,res)=>{
+    User.find({})
+    .exec((error, users)=>{
+        if(error) res.status(400).json({error});
+
+        if(users) res.status(200).json({users});
+    })
+}
+
 exports.getOneUser = (req,res) =>{
 	const {_id} = req.params;
 
