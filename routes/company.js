@@ -15,11 +15,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/create/company', requireSignin, upload.single('image'), createCompany);
+router.post('/create/company', requireSignin, createCompany);
 router.post('/disable/company', requireSignin, adminMiddleware, disableCompany);
 router.post('/enable/company', requireSignin, adminMiddleware, enableCompany);
 router.post('/delete/company', requireSignin, adminMiddleware, deleteCompany);
-
 
 
 router.get('/get/company', requireSignin, adminMiddleware, getCompany);
