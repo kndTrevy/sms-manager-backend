@@ -20,7 +20,7 @@ const option = {
     useCreateIndex: true, useFindAndModify: false
 };
 
-mongoose.connect(process.env.DEV_URL, option)
+mongoose.connect(process.env.PRODUCTION_URL, option)
     .then(() => {
         console.log('Db connection successfull');
     })

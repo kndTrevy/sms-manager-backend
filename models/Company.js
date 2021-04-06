@@ -17,7 +17,7 @@ const companySchema = new mongoose.Schema({
         type: String,
 	    required: true
     },
-     clients:{
+    clients:{
         type: String
     }
 }, { timestamps: true });

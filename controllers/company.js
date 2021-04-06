@@ -1,5 +1,6 @@
 const Company = require('../models/Company');
 const User = require('../models/User');
+const Client = require('../models/Client');
 
 exports.createCompany = (req,res)=>{
 	let { company } = req.body;
@@ -8,7 +9,7 @@ exports.createCompany = (req,res)=>{
 
     const { _id } = req.user;
 
-    const imgBaseUrl = `${req.protocol}://${req.hostname}:2500/public/`;
+    const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
 
     if (req.file) {
        const image = `${imgBaseUrl}${req.file.filename}`;
@@ -63,6 +64,7 @@ exports.deleteCompany = (req,res)=>{
 }
 
 exports.getCompany = (req,res)=>{
+
     Company.find({})
     .exec((error, companies)=>{
         if(error) res.status(400).json({error});
@@ -80,7 +82,7 @@ exports.getOneCompany = (req,res)=>{
             return res.status(400).json({error});
         }
 
-        if(companies) {
+        if(company) {
             return res.status(200).json({company});
         }
 

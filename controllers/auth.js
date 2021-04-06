@@ -16,7 +16,7 @@ exports.signUp = (req, res) => {
         firstName, lastName, email,role, username
     }
 
-    const imgBaseUrl = `${req.protocol}://${req.hostname}:2500/public/`;
+    const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
     const assetDir = `../assets/default.jpg`;
 
     if (req.file) {
@@ -29,9 +29,11 @@ exports.signUp = (req, res) => {
         creationObj.company = req.body.company;
     }
 
+    console.log(req.body);
+
     User.findOne({ email })
         .exec(async (error, user) => {
-            if (error) res.status(500).json({ error });
+            if (error) res.status(500).json({ Message:"Give me the answer motherfucker!!" });
             if (user) res.status(400).json({ message: "Email is already taken" });
 
             const hash_password = await bcrypt.hash(password, 10);
@@ -103,7 +105,7 @@ exports.updateProfile = async (req, res) => {
     const {email, password, _id}= req.body;
 
 
-    const imgBaseUrl = `${req.protocol}://${req.hostname}:2500/public/`;
+    const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
 
 
     if (req.file) {
