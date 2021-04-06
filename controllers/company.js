@@ -9,13 +9,12 @@ exports.createCompany = (req,res)=>{
 
     const { _id } = req.user;
 
-    const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
+    // const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
 
-    if (req.file) {
-       const image = `${imgBaseUrl}${req.file.filename}`;
-    }
+    // if (req.file) {
+    //    const image = `${imgBaseUrl}${req.file.filename}`;
+    // }
     
-
 	Company.findOne({company})
 			.exec((error,data)=>{
 				if(error) res.status(500).json({error});
