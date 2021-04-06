@@ -11,17 +11,13 @@ exports.createCompany = (req,res)=>{
 
     const imgBaseUrl = `${req.protocol}://${req.hostname}/public/`;
 
-    if (req.file) {
-       const image = `${imgBaseUrl}${req.file.filename}`;
-    }
-    
 	Company.findOne({company})
 			.exec((error,data)=>{
 				if(error) res.status(500).json({error});
 
 				if(data) res.status(400).json({Message: "I think your company already exists"})
 
-				const _company = new Company({company, image})
+				const _company = new Company({company})
 				_company.save((error,success)=>{
 					if(error) res.status(400).json({error});
 
