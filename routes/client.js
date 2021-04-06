@@ -3,7 +3,7 @@ const { requireSignin, customerMiddleware, adminMiddleware } = require('../commo
 const { createClient, deleteClient, getClients, getClientsByCompany } = require('../controllers/client');
 const router = express.Router();
 
-router.post('/create/company', requireSignin, customerMiddleware, createClient);
+router.post('/create/client', requireSignin, createClient);
 router.post('/delete/client', requireSignin, customerMiddleware, deleteClient);
 
 

@@ -12,6 +12,13 @@ const companySchema = new mongoose.Schema({
     	type: String,
     	enum: ["disabled", "enabled"], 
     	default: "enabled"
+    },
+    image: {
+        type: String,
+	    required: true
+    },
+     clients:{
+        type: String
     }
 }, { timestamps: true });
 

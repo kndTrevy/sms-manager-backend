@@ -8,10 +8,12 @@ exports.signUp = (req, res) => {
 
     const { firstName, lastName, email, password } = req.body;
     const { role } = req.query;
+    const username = shortid.generate();
+ 
     let profilePicture;
 
     let creationObj={
-        firstName, lastName, email,role
+        firstName, lastName, email,role, username
     }
 
     const imgBaseUrl = `${req.protocol}://${req.hostname}:2500/public/`;
@@ -26,8 +28,6 @@ exports.signUp = (req, res) => {
     if(req.body.company){
         creationObj.company = req.body.company;
     }
-
-    const username = shortid.generate();
 
     User.findOne({ email })
         .exec(async (error, user) => {
@@ -119,16 +119,11 @@ exports.updateProfile = async (req, res) => {
             if (user) {
                 const update = req.body;
 
-                const passwordVerification = await user.authenticate(password);
-                if (passwordVerification) {
-
                     const userUpdates = await User.findOneAndUpdate({ email }, {...update}, { new: true });
 
-                    return res.status(201).json({ updatedValues: userUpdates })
+                    return res.status(201).json({ updatedValues: userUpdates, message: "Updated" })
 
-                }else{
-                    return res.status(400).json({message: "Password invalid"});
-                }
+                
             }else{
                 return res.status(400).json({Message: "No User to update"});
             }

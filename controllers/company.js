@@ -8,6 +8,11 @@ exports.createCompany = (req,res)=>{
 
     const { _id } = req.user;
 
+    const imgBaseUrl = `${req.protocol}://${req.hostname}:2500/public/`;
+
+    if (req.file) {
+       const image = `${imgBaseUrl}${req.file.filename}`;
+    }
     
 
 	Company.findOne({company})
@@ -16,12 +21,11 @@ exports.createCompany = (req,res)=>{
 
 				if(data) res.status(400).json({Message: "I think your company already exists"})
 
-				const _company = new Company({company})
+				const _company = new Company({company, image})
 				_company.save((error,success)=>{
 					if(error) res.status(400).json({error});
 
 					if(success) {
-                        console.log(_id);
                         User.findOneAndUpdate({ _id }, { company: success._id }, { new: true })
                             .exec((err,response)=>{
                                 if(err) res.status(400).json({err});

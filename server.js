@@ -7,6 +7,7 @@ const authRouter = require('./routes/auth');
 const companyRouter = require('./routes/company');
 const clientRouter = require('./routes/client');
 const messageRouter = require('./routes/message');
+const initialDataRouter = require("./routes/initialData");
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use('/api', authRouter);
 app.use('/api', companyRouter);
 app.use('/api', clientRouter);
 app.use('/api', messageRouter);
+app.use('/api', initialDataRouter);
 
 
 app.listen(process.env.PORT, () => {

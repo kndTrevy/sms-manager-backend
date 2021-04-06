@@ -1,16 +1,43 @@
 const Message = require('../models/Message');
+const Company = require('../models/Company');
 
 exports.createMessage = (req,res)=>{
-	const { from, message, clients } = req.body;
+	const { from, message, clients, timeToWait } = req.body;
+	const createdBy = req.user._id;
 
-    const createdBy = req.user._id;
+    const currentDate = new Date(); 
+    const timestamp = currentDate.getTime();
 
-	const data = new Message({from, message, clients, createdBy});
-    data.save((error,message)=>{
-        if(error) res.status(400).json({error});
-        if(message){
-            res.status(200).json({Message: "Message sent successfully"});
-        }
+    let timeToSend;
+
+    if(timeToWait > timestamp){
+        timeToSend = timeToWait - timestamp;
+    }
+    if (timeToWait < timestamp) {
+        timeToSend = timestamp - timeToWait;
+    }
+
+    console.log(timeToSend);
+
+
+	Company.findOne({_id: from})
+		.exec((err,company)=>{
+		   if(err) res.status(400).json({err});
+		   if(company){
+      		
+            setTimeout(function() {
+
+                const data = new Message({from, message, clients, createdBy});
+                data.save((error,message)=>{
+                if(error) res.status(400).json({error});
+                if(message){
+                     res.status(200).json({Message: "Message sent successfully"});
+                }
+               })
+
+            }, timeToSend);
+			
+            }
     })
 }
 
@@ -44,7 +71,8 @@ exports.updateMessage= (req,res)=>{
 
 exports.getMessages = (req,res)=>{
     Message.find({})
-        .exec((errror, messages)=>{
+    .populate({path:"from", select:"_id company image"})
+    .exec((error, messages)=>{
             if (error) res.status(404).json({error})
             if(messages) res.status(200).json({messages});
         })
@@ -54,6 +82,7 @@ exports.getOneMessage = (req,res)=>{
     const { _id }= req.params;
 
     Message.findOne({_id})
+    .populate({path:"from", select:"_id company image"})
     .exec((error, message)=>{
         if(error) {
             return res.status(404).json({error});

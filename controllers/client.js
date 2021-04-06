@@ -5,6 +5,8 @@ exports.createClient = (req,res) =>{
 
 	const createdBy = req.user._id;
 
+	console.log(company);
+
 	Client.findOne({contactNumber, company})
 		.exec((error,clients)=>{
 			if(error) res.status(500).json({error})
