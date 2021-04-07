@@ -5,7 +5,9 @@ exports.createClient = (req,res) =>{
 
 	const createdBy = req.user._id;
 
-	console.log(company);
+	const clientObj = {
+		firstName, lastName, contactNumber, company, createdBy
+	}
 
 	Client.findOne({contactNumber, company})
 		.exec((error,clients)=>{
@@ -14,10 +16,10 @@ exports.createClient = (req,res) =>{
 			if(clients){
 				return res.status(400).json({Message: "Contact Number already used"})
 			}
-			const client = new Client({firstName, lastName, contactNumber, createdBy});
+			const client = new Client({...clientObj});
 			client.save((err, _client)=>{
 				if(err) res.status(400).json({err})
-				if(_client) res.status(201).json({})
+				if(_client) res.status(201).json({_client, message:"Created"})
 			})
 		})
 	
